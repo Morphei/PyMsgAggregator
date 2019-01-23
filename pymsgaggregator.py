@@ -1,17 +1,5 @@
 import wx
-
-
-class AdderTab(wx.Panel):
-    def __init__(self, parent):
-        wx.Panel.__init__(self, parent)
-        label = wx.StaticText(self, -1, "You didn't add any social network. Add it now?")
-        add_button = wx.Button(self, -1, "Add")
-        box_sizer = wx.BoxSizer(wx.VERTICAL)
-        box_sizer.Add(label, 0, wx.ALL, 0)
-        box_sizer.Add(add_button, 0, wx.ALL, 0)
-        box_sizer.SetSizeHints(self)
-        self.SetSizer(box_sizer)
-
+from custom_elements import tabs
 
 class MainWindow(wx.Frame):
     def __init__(self, parent, title):
@@ -30,14 +18,13 @@ class MainWindow(wx.Frame):
         # Creating tab holder
         main_panel = wx.Panel(self)
         tab_holder = wx.Notebook(main_panel)
-
-        adder_tab = AdderTab(tab_holder)
-
+        adder_tab = tabs.AdderTab(tab_holder)
         tab_holder.AddPage(adder_tab, "Add SN")
 
         sizer = wx.BoxSizer()
-        sizer.Add(tab_holder, 1, wx.EXPAND)
+        sizer.Add(tab_holder, 1, wx.EXPAND | wx.ALL)
         main_panel.SetSizer(sizer)
+        sizer.SetSizeHints(self)
 
         # Main window features
         self.SetMenuBar(menu_bar)
@@ -46,8 +33,8 @@ class MainWindow(wx.Frame):
         self.Show(True)
 
     def menu_handler(self, event):
-        id = event.GetId()
-        if id == wx.ID_EXIT:
+        menu_item_id = event.GetId()
+        if menu_item_id == wx.ID_EXIT:
             self.Close()
 
 
